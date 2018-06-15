@@ -13,7 +13,7 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
     * register2 = counter
     * register2 = register2 - 1
     * counter = register2
-  * count가 5일때 두 프로세스 실행
+  * count가 5일때 두 프로세스 실행 예제
     * S0: producer execute register1 = counter         {register1 = 5}
     * S1: producer execute register1 = register1 + 1   {register1 = 6} 
     * S2: consumer execute register2 = counter        {register2 = 5} 
@@ -22,18 +22,17 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
     * S5: consumer execute counter = register2        {counter = 4}
 ### 경쟁상황(RaceCondtion)
 - 이처럼 두개의 프로세스가 동시에 변수 counter를 조작하고
-그 실행결과가 접근이 발생한 특정 순서에 의존하는 상황을 경쟁 상황(Race Condition) 이라고 한다.
+그 실행결과가 접근이 발생한 특정 순서에 의존하는 상황을 **경쟁 상황(Race Condition)** 이라고 한다.
 ## 6.2 임계구역 문제(The Critical-Section Problem)
-각 프로세스는 임계구역(Critical Section)이라고 부르는 코드 부분을 포함하고 있고, 그 안에서는 다른 프로세스와 공유하는 변수를 변경하거나, 테이블을 갱신
-하거나 파일을 쓰거나 하는 등의 작업을 수행한다.
+각 프로세스는  **임계구역(Critical Section)** 이라고 부르는 코드 부분을 포함하고 있고, 그 안에서는 다른 프로세스와 공유하는 변수를 변경하거나, 테이블을 갱신 하거나 파일을 쓰거나 하는 등의 작업을 수행한다.
 ### 임계구역 특징
 임계구역의 가장큰 특징은 한 프로세스가 자신의 임계구역에서 수행하는 동안에는 다른 프로세스들은 그들의 임계구역에 들어갈 수 없다는 사실이다.
+* 전형적인 프로세스의 일반적인 임계구역 구조
 
    ![Alt text](/1.jpg)
-   
- <center>  <전형적인 프로세스의 일반적인 임계구역 구조> </center> 
+
   
-###임계구역 구조
+### 임계구역 구조
 #### 진입 구역(Entry Section)
 자신의 임계구역으로 진입하려면 진입 허가를 요청해야하는데 이러한 요청을 구현하는 코드부분이다.
 #### 퇴출 구역(Exit Section)
@@ -61,10 +60,10 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
    
 ### 피터슨 해결책 증명
 1. 상호 배제가 제대로 지켜지는가.
-* flag[0] == flag[1] == true라고 해도 turn값은 i , j 둘중 하나만 가질수있다. 따라서 상호배제가 지켜진다.
+   * flag[0] == flag[1] == true라고 해도 turn값은 i , j 둘중 하나만 가질수있다. 따라서 상호배제가 지켜진다.
 2. 진행에 대한 요구조건을 만족시키는가.
 3. Bounded Waiting 조건을 만족시키는가.
-* Pj가 임계구역을 빠져나갈때 flag[j]의 값을 FALSE로 변경해줌으로 Pi가 진입하게 된다.
+   * Pj가 임계구역을 빠져나갈때 flag[j]의 값을 FALSE로 변경해줌으로 Pi가 진입하게 된다.
 그다음 Pj는 자기자신 스스로 turn 값을 i로 바꾸어 임계구역에 들어가지 못하게 해야한다.
 Pi 프로세스 임계구역에서는 turn값을 바꾸지 않기 때문이다.
 
@@ -92,9 +91,13 @@ Perterson's Solution는 소프트웨어 기반 해결책이다. 인터럽트 되
    따라서 lock이 0일 경우에만 프로세스가 임계구역으로 진입할 수 있다.
    
   * 문제점
-      * 위 알고리즘은 상호 배제 조건은 만족시키지만 한정된 대기 조건을 만족 시키지 못한다. Perterson's Solution 같은경우를 보면 turn이라는 변수를
-      통해 제어를 하여 두 프로세스가 번갈아 실행되게 하지만 위 알고리즘은 프로세스들의 while문의 조건식이 같기 때문에 Pj가 들어갈 수 있으면
-      Pi도 들어갈수 있다. 따라서 하나의 프로세스가 독점 될 가능성이 존재한다.
+      * 위 알고리즘은 상호 배제 조건은 만족시키지만 한정된 대기 조건을 만족 시키지 못한다. 
+      
+      Perterson's Solution 같은경우를 보면 turn이라는 변수를 통해 제어를 하여 
+      
+      두 프로세스가 번갈아 실행되게 하지만 위 알고리즘은 프로세스들의 while문의 조건식이 같기 때문에 
+      
+      Pj가 들어갈 수 있으면 Pi도 들어갈수 있다. 따라서 하나의 프로세스가 독점 될 가능성이 존재한다.
       
 ### Test_and_set() 명령어를 사용한 한정된 대기 조건을 만족시키는 상호배제
    ![Alt text](/7.jpg)
@@ -107,7 +110,9 @@ Perterson's Solution는 소프트웨어 기반 해결책이다. 인터럽트 되
    
    key값은 test_and_set() 명령어를 통해서만 변경된다.
    
-   한 프로세스가 임계구역을 떠날때 waiting 배열을 순환하면서 다음 프로세스를 임계구역에 들어 갈 수있게 해주므로 한정된 대기시간을 만족시켜준다.
+   한 프로세스가 임계구역을 떠날때 waiting 배열을 순환하면서 다음 프로세스를 임계구역에 들어 갈 수있게 해주므로
+   
+   **한정된 대기시간**을 만족시켜준다.
 
 
 
