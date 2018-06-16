@@ -169,12 +169,9 @@ Pi가 자원을 요청하게 되면 아래와 같은 조치가 취해진다.
 1. 만일 Request[i] <= Need[i]이면 Step2로 가고 그게 아니라면 시스템에 있는 개수보다 더 많이 요청했으므로 오류로 처리한다.
 2. 만일 Request[i] <= Available 이면 step3로 가고 그게 아니라면 요청한 자원은 당장에 없으므로 Pi는 기다려야한다.
 3. 마치 시스템이 Pi에게 자원을 할당해준 것처럼 시스템 상태정보를 아래처럼 바꾸어 본다.
-
-Available = Available - Request[i]
-
-Allocation = Allocation[i] + Request[i]
-
-Need[i] = Need[i] - Request[i]
+    * Available = Available - Request[i]
+    * Allocation = Allocation[i] + Request[i]
+    * Need[i] = Need[i] - Request[i]
 
 만일 이렇게 바뀐 상태가 안전하다면 Pi에게 여기에 반영된 정보대로 자원을 할당해 준다.
 만일 그 상태가 불안전하다면 위의 자원 할당 상태는 원상태로 복원된다.
@@ -230,15 +227,13 @@ Request[i,j] == k 라면 현재 Pi가 Rj를 k개 요청 중임을 뜻한다.
 1. Work와 Finish는 크기가 각각 m과 n인 vector이다. Work = Available로 초기화 하고 Allocation[i]가 0 이면  Finish[i] = true
 0이 아니면 Finish[i] = false 이다.
 2. 아래 두 조건을 만족시키는 i 값을 찾는다.
-  * Finish[i] == false
-  * Request[i] <= Work(Available)
-  
-  그러한 i값을 찾을 수 없다면 step4로 간다.
-3. Work = Work + Allocation[i]
-
-Finish[i] = true
-
-go to step2
+    * Finish[i] == false
+    * Request[i] <= Work(Available)
+    * 그러한 i값을 찾을 수 없다면 step4로 간다. 
+3. 할당된 자원 반납
+    * Work = Work + Allocation[i]
+    * Finish[i] = true
+    * go to step2
 4. 어떠한 i값에 대해 (0 <= i <= n) Finish[i] == false 이면 이 시스템은 교착상태에 빠져 있는것이다. 그리고 Pi가 교착상태에 빠져잇다.
 
 ### Example
