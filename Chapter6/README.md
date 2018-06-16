@@ -31,7 +31,7 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
 임계구역의 가장큰 특징은 한 프로세스가 자신의 임계구역에서 수행하는 동안에는 다른 프로세스들은 그들의 임계구역에 들어갈 수 없다는 사실이다.
 * 전형적인 프로세스의 일반적인 임계구역 구조
 
-   ![Alt text](/1.jpg)
+   ![Alt text](../1.jpg)
 
   
 ### 임계구역 구조
@@ -52,7 +52,7 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
   * 비선점형 커널은 모든 프로세스는 자발적으로 CPU의 제어를 양보하기 전까지 계속 수행된다. 따라서 경쟁조건을 염려할 필요가 없다.
 ## 6.3 피터슨의 해결안(Peterson's Solution)
 
-   ![Alt text](/2.jpg)
+   ![Alt text](./2.jpg)
    
    <center> <Perterson's Solution에서 프로세스 구조></center> 
    
@@ -73,17 +73,17 @@ Pi 프로세스 임계구역에서는 turn값을 바꾸지 않기 때문이다.
 ## 6.4 동기화 하드웨어(Synchronization Hardware)
 Perterson's Solution는 소프트웨어 기반 해결책이다. 인터럽트 되지 않은 하드웨어 명령어를 통해서 임계구역 문제를 상대적으로 간단하게 해결할수 있다.
 ### Test_and_Set() 명령어의 정의
-   ![Alt text](/3.jpg)
+   ![Alt text](./3.jpg)
    
 ### Test_and_set() 명령어를 사용한 상호 배제 구현
-   ![Alt text](/4.jpg)
+   ![Alt text](./4.jpg)
    
    * 만약 lock이 false라면 false를 리턴하고 lock은 true만드는 특징을 가지고 있다.
 ### compare_and_swap() 명령어의 정의   
-   ![Alt text](/5.jpg)
+   ![Alt text](./5.jpg)
    
 ### compare_and_swap() 명령어를 사용한 상호 배제 구현
-   ![Alt text](/6.jpg)
+   ![Alt text](./6.jpg)
    
    어떠한 경우에는 compare_and_swap 명령어는 value의 원래 값을 반환한다.
    
@@ -103,7 +103,7 @@ Perterson's Solution는 소프트웨어 기반 해결책이다. 인터럽트 되
       Pj가 들어갈 수 있으면 Pi도 들어갈수 있다. 따라서 하나의 프로세스가 독점 될 가능성이 존재한다.
       
 ### Test_and_set() 명령어를 사용한 한정된 대기 조건을 만족시키는 상호배제
-   ![Alt text](/7.jpg)
+   ![Alt text](./7.jpg)
    
    boolean waiting[n] 이라는 변수를 통해 한정된 대기 조건을 만족시킨다.
    
@@ -123,15 +123,15 @@ Perterson's Solution는 소프트웨어 기반 해결책이다. 인터럽트 되
 
 ### MUTEX락을 이용한 임계구역 문제 해결 방안
 
-   ![Alt text](/8.jpg)
+   ![Alt text](./8.jpg)
    
 ### acquire() 함수의 정의
 
-   ![Alt text](/9.jpg)
+   ![Alt text](./9.jpg)
    
 ### release() 함수의 정의
 
-   ![Alt text](/10.jpg)
+   ![Alt text](./10.jpg)
    
 ### MUTEX 락의 단점
 MUTEX락 뿐만 아니라 test_and_set()과 compare_and_swap() 방법또한 임계구역에 들어가기 위해서
@@ -144,7 +144,7 @@ MUTEX락 뿐만 아니라 test_and_set()과 compare_and_swap() 방법또한 임�
 
 ### wait()와 signal()연산 정의
 
-   ![Alt text](/11.jpg)
+   ![Alt text](./11.jpg)
    
 ### 6.6.1. 세마포 사용법
    * 카운팅 세마포(Counting Semaphore) : 카운팅 세마포에서 S의 값은 제한 없는 영역을 갖는다.
@@ -164,11 +164,11 @@ MUTEX락 뿐만 아니라 test_and_set()과 compare_and_swap() 방법또한 임�
 
 ### wait()연산 정의
 
-   ![Alt text](/12.jpg)
+   ![Alt text](./12.jpg)
    
 ### signal()연산 정의
 
-   ![Alt text](/13.jpg)
+   ![Alt text](./13.jpg)
    
  wait()연산에 있는 block()메소드는 자기를 호출한 프로세스를 중지시킨다.
  signal()연산에 있는 wakeup(P) 연산은 봉쇄된 프로세스를 재개시킨다.
@@ -214,11 +214,11 @@ semaphore full = 0;
 
 ### 생산자 프로세스의 구조
 
-   ![Alt text](/14.jpg)
+   ![Alt text](./14.jpg)
   
 ### 소비자 프로세스의 구조
 
-   ![Alt text](/15.jpg)
+   ![Alt text](./15.jpg)
   
 ### 6.7.2. Readers-Writers 문제
 하나의 데이터베이스가 다수의 병행 프로세스들 간에 공유된다고 가정하자. 이들 프로세스 들 중의 일부는 데이터베이스의 내용을 읽기만 하고 
@@ -234,11 +234,11 @@ int read_count = 0; // 현재 몇개의 프로세스들이 객체를 읽고 있�
 
 ### Writer 프로세스의 구조
 
-   ![Alt text](/15.jpg)
+   ![Alt text](./15.jpg)
   
 ### Reader 프로세스의 구조
 
-   ![Alt text](/16.jpg)
+   ![Alt text](./16.jpg)
   
 * writer가 임계구역에 있고 n개의 reader들이 기다리고 있으면 한개의 reader만이 rw_mutex와 관련되어 대기하고 있고
 n-1개의 reader 들은 mutex와 관련하여 대기하고 있다. 
@@ -255,11 +255,11 @@ n-1개의 reader 들은 mutex와 관련하여 대기하고 있다.
 
 ### 식사하는 철학자의 상황
 
-   ![Alt text](/17.jpg)
+   ![Alt text](./17.jpg)
  
 ### 철학자 i의 구조
  
-   ![Alt text](/18.jpg)
+   ![Alt text](./18.jpg)
  
 ### 문제점
 이 해결안은 인접한 두 철학자가 동시에 식사하지 않는다는 것을 보장하지만, 교착 상태를 야기할 가능성이 있다.
@@ -275,12 +275,12 @@ chopstick의 모든 원소들은 이제 0이되고 각 철학자가 오른쪽 �
 ### 6.8.1 모니터 사용법(Usage)
 **추상화 된 데이터 형(abstract data type, ADT)** 은 데이터와 이 데이터를 조작하는 함수들의 집합을 하나의 단위로 묶어 보호한다.
  
-   ![Alt text](/19.jpg)
+   ![Alt text](./19.jpg)
 
  
 ### 6.8.2. 모니터를 사용한 식사하는 철학자 해결안
  
-   ![Alt text](/20.jpg)
+   ![Alt text](./20.jpg)
  
 * 철학자 i는 그의 양쪽 두 이웃이 식사하지 않을 때만 변수 state[i] = eating으로 설정할수 있다.
 * 철학자 i가 젓가락을 내려 놓을때 양옆의 철학자들이 eating 상태가 될수 있는지 test한다.
@@ -289,17 +289,17 @@ chopstick의 모든 원소들은 이제 0이되고 각 철학자가 오른쪽 �
    * 각 모니터 마나 mutex라는 세마포가 정의되고 초기값은 1이다.
    * 프로세스는 모니터로 들어가기 전에 wait(mutex)를 실행하고 모니터를 나온 후에 signal(mutex)를 실행해야한다.
     
-   ![Alt text](/21.jpg)
+   ![Alt text](./21.jpg)
    
    * next_count는 next에서 일시중단 되는 프로세스의 개수를 의미한다.
 
 ### x.wait() 연산 구현
  
-   ![Alt text](/22.jpg)
+   ![Alt text](./22.jpg)
  
 ### x.signal() 연산 구현
  
-   ![Alt text](/23.jpg)
+   ![Alt text](./23.jpg)
  
 ### 6.8.4. 모니터 내에서 프로세스 수행재개
 조건 변수 x에 여러 프로세스들이 일시중단 되어 있고 어떤 프로세스가 x.signal() 연산을 수행했다면,
@@ -312,7 +312,7 @@ chopstick의 모든 원소들은 이제 0이되고 각 철학자가 오른쪽 �
 
 x.signal()이 수행되면 가장 작은 우선순위 번호를 가진 프로세스가 다음번에 수행재개 된다.
     
-   ![Alt text](/24.jpg)
+   ![Alt text](./24.jpg)
  
 ## 6.9. 동기화 사례(Synchronization Examples)
 
