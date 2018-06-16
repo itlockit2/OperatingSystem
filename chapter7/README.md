@@ -157,12 +157,10 @@ Need[i,j] = Max[i,j] - Allocation[i,j] 관계가 있음을 알 수 있다.
     * Finish[i] == false
     * Need[i] <= Work(Available)
     * 만일 그러한 i 값을 찾을 수 없다면 4로 간다.
-3. Work(Available) = Work(Available) + Allocation[i]
-
-Finish[i] = true
-
-Step 2로간다.
-
+3. 할당된 자원 반납
+  * Work(Available) = Work(Available) + Allocation[i]
+  * Finish[i] = true
+  * Step 2로간다.
 4. 모든 i 값에 대해 Finish[i] == true 이면 이 시스템은 안전 상태에 잇다.
 
 #### 7.5.3.2. 자원 요청 알고리즘(Resource-Request Algorithm)
