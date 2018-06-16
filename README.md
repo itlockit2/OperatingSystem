@@ -22,7 +22,9 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
     * S5: consumer execute counter = register2        {counter = 4}
 ### 경쟁상황(RaceCondtion)
 - 이처럼 두개의 프로세스가 동시에 변수 counter를 조작하고
-그 실행결과가 접근이 발생한 특정 순서에 의존하는 상황을 **경쟁 상황(Race Condition)** 이라고 한다.
+그 실행결과가 접근이 발생한 특정 순서에 의존하는 상황을 
+
+**경쟁 상황(Race Condition)** 이라고 한다.
 ## 6.2 임계구역 문제(The Critical-Section Problem)
 각 프로세스는  **임계구역(Critical Section)** 이라고 부르는 코드 부분을 포함하고 있고, 그 안에서는 다른 프로세스와 공유하는 변수를 변경하거나, 테이블을 갱신 하거나 파일을 쓰거나 하는 등의 작업을 수행한다.
 ### 임계구역 특징
@@ -34,11 +36,11 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
   
 ### 임계구역 구조
 #### 진입 구역(Entry Section)
-자신의 임계구역으로 진입하려면 진입 허가를 요청해야하는데 이러한 요청을 구현하는 코드부분이다.
+   * 자신의 임계구역으로 진입하려면 진입 허가를 요청해야하는데 이러한 요청을 구현하는 코드부분이다.
 #### 퇴출 구역(Exit Section)
-임계구역에서 빠져나올때 다른 프로세스가 임계구역에 들어갈수 있게끔 처리하는 코드부분이다.
+   * 임계구역에서 빠져나올때 다른 프로세스가 임계구역에 들어갈수 있게끔 처리하는 코드부분이다.
 #### 나머지 구역(Remainder Section)
-임계구역과 관련없는 나머지 코드부분이다.
+   * 임계구역과 관련없는 나머지 코드부분이다.
 ### 임계구역 문제 해결안
 1. 상호배제(Mutual Exclusion) : 프로세스 P가 자기의 임계구역에서 실행된다면, 다른 프로세스들은 그들 자신의 임계구역에서 실행될 수 없다.
 2. 진행(Progress) : 임계구역으로 진입하려고 하는 프로세스들이 있다면 나머지구역(Remainder Section)을 실행하고 있는 프로세스가 아닌
@@ -54,9 +56,10 @@ Chapter 6. 프로세스 동기화(Process Synchronization)
    
    <center> <Perterson's Solution에서 프로세스 구조></center> 
    
-   turn은 임계구역으로 진입할 순번을 나타낸다. 즉 turn == i이면 프로세스 Pi가 임계구역에서 실행될 수 있다.
+   * turn은 임계구역으로 진입할 순번을 나타낸다. 즉 turn == i이면 프로세스 Pi가 임계구역에서 실행될 수 있다.
    
-   flag배열은 프로세스가 임계구역으로 진입할 준비가 되었다는것을 나타낸다. 예를 들어 flag[i]가 TRUE이면 Pi가 임계구역으로 진입할 준비가 되었다는뜻이다.
+   * flag배열은 프로세스가 임계구역으로 진입할 준비가 되었다는것을 나타낸다. 예를 들어 flag[i]가 TRUE이면 
+   Pi가 임계구역으로 진입할 준비가 되었다는뜻이다.
    
 ### 피터슨 해결책 증명
 1. 상호 배제가 제대로 지켜지는가.
@@ -75,7 +78,7 @@ Perterson's Solution는 소프트웨어 기반 해결책이다. 인터럽트 되
 ### Test_and_set() 명령어를 사용한 상호 배제 구현
    ![Alt text](/4.jpg)
    
-   만약 lock이 false라면 false를 리턴하고 lock은 true만드는 특징을 가지고 있다.
+   * 만약 lock이 false라면 false를 리턴하고 lock은 true만드는 특징을 가지고 있다.
 ### compare_and_swap() 명령어의 정의   
    ![Alt text](/5.jpg)
    
